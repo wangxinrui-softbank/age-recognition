@@ -1,0 +1,55 @@
+{
+    "name": "ResMLP",
+    "n_gpu": 1,
+    "amp": true,
+    "checkpoint": null,
+    "arch": {
+        "type": "ResMLP",
+        "args": {
+            "dropout": 0,
+            "num_residuals_per_block": 2,
+            "num_blocks": 4,
+            "num_classes": 79,
+            "num_initial_features": 512,
+            "add_residual": true,
+            "add_IC": true
+        }
+    },
+    "data_loader": {
+        "type": "TXTDataLoader",
+        "args": {
+            "txt_train": "/share5/dataset/webface42m/webface42m_train4m.txt",
+            "txt_val": "/share5/dataset/webface42m/webface42m_val1m.txt",
+            "batch_size": 512,
+            "shuffle": true,
+            "validation_split": 0,
+            "num_workers": 8
+        }
+    },
+    "optimizer": {
+        "type": "AdamW",
+        "args": {
+            "lr": 1e-3,
+            "weight_decay": 1e-2
+        }
+    },
+    "loss": "cse",
+    "metrics": [
+        "accuracy"
+    ],
+    "lr_scheduler": {
+        "type": "ExponentialLR",
+        "args": {
+            "gamma": 0.3947943239814273
+        }
+    },
+    "trainer": {
+        "epochs": 20,
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 5,
+        "tensorboard": true
+    }
+}
